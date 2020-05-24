@@ -1,0 +1,70 @@
+### docker-compose.yml ###
+
+# Port-forwarding formats:
+# "host:container"
+# "container" (randomly generates the host value in "host:container")
+# Use expose: - "container" to document a port accessible in the container,
+#  but not on the host.
+# Container ports are accessible within Docker networks by default.
+
+version: "3.7"
+
+services:
+  mongodb:
+    image: mongo:4.2
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodata:/data/db
+      - mongotemp:/tmp/mongodb
+    labels:
+      # First, safely backs up from data to temp using db-specific tool.
+      # Then temp is backed up externally.
+      - docker-volume-backup.exec-pre-backup=mongodump --archive=/tmp/mongodb/mongo.dump
+      - docker-volume-backup.exec-post-backup=rm -rfv /tmp/mongodb
+      # Restore backup by cp into mongodb container, $ mongorestore --archive=mongo.dump
+  postgres:
+    image: postgres:12.3
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+      - postgrestemp:/tmp/postgres
+    labels:
+      # First, safely backs up from data to temp using db-specific tool.
+      # Then temp is backed up externally.
+      - docker-volume-backup.exec-pre-backup=pg_dumpall -U postgres -f /tmp/postgres/pg_backup.bak
+      - docker-volume-backup.exec-post-backup=rm -rfv /tmp/postgres
+      # Restore backup by cp into postgres container, $ psql -f pg_backup.bak postgres
+  adminer:
+    image: adminer:4.7
+    ports:
+      - "8080:8080"
+  backup:
+    image: futurice/docker-volume-backup:2.0.0
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - mongotemp:/backup/mongodb:ro
+      - postgrestemp:/backup/postgres:ro
+      - ${BACKUP_DIR}:/archive
+    environment:
+      - BACKUP_CRON_EXPRESSION=${BACKUP_CRON_EXPRESSION}
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  crontris:
+    image: tristanbrown/crontris:${CRONTRIS_TAG:-latest}
+    depends_on:
+      - rabbitmq
+      - mongodb
+    environment:
+      - COMPUTERNAME=${COMPUTERNAME}
+volumes:
+  mongodata:
+  mongotemp:
+  postgresdata:
+  postgrestemp:
