@@ -2,7 +2,7 @@
 # View here:
 # https://github.com/jupyter/docker-stacks/blob/master/scipy-notebook/Dockerfile
 
-ARG BASE_CONTAINER=jupyter/scipy-notebook
+ARG BASE_CONTAINER=jupyter/minimal-notebook
 FROM $BASE_CONTAINER
 
 # USER root
