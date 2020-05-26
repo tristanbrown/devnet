@@ -8,34 +8,25 @@ FROM $BASE_CONTAINER
 # USER root
 USER $NB_UID
 
-RUN mkdir /home/$NB_USER/venv && \
+# Prepare the global environment
+RUN pip install --upgrade pip wheel && \
+    pip install ipykernel && \
+    mkdir /home/$NB_USER/venv && \
     fix-permissions /home/$NB_USER
 WORKDIR /home/$NB_USER/venv
 
-# Create the venvs first
-ARG ENV_NAME=data
-RUN python -m venv $ENV_NAME && \
-    . $ENV_NAME/bin/activate && \
-    pip install --upgrade pip && \
-    pip install ipykernel && \
-    python -m ipykernel install --name=$ENV_NAME && \
-    deactivate
-ARG ENV_NAME=invest
-RUN python -m venv $ENV_NAME && \
-    . $ENV_NAME/bin/activate && \
-    pip install --upgrade pip && \
-    pip install ipykernel && \
-    python -m ipykernel install --name=$ENV_NAME && \
-    deactivate
-
-# Install the venv packages
+# Create the venvs
 COPY requirements requirements
 ARG ENV_NAME=data
-RUN . $ENV_NAME/bin/activate && \
+RUN python -m venv $ENV_NAME && \
+    . $ENV_NAME/bin/activate && \
+    python -m ipykernel install --name=$ENV_NAME && \
     pip install -r requirements/$ENV_NAME.txt && \
     deactivate
 ARG ENV_NAME=invest
-RUN . $ENV_NAME/bin/activate && \
+RUN python -m venv $ENV_NAME && \
+    . $ENV_NAME/bin/activate && \
+    python -m ipykernel install --name=$ENV_NAME && \
     pip install -r requirements/$ENV_NAME.txt && \
     deactivate
 
