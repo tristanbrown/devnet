@@ -1,0 +1,2 @@
+# Requirements for the venv: invest
+alpaca-trade-api==0.48
