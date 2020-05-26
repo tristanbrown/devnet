@@ -56,6 +56,16 @@ services:
       - mongodb
     environment:
       - COMPUTERNAME=${COMPUTERNAME}
+  jupyter:
+    image: tristanbrown/jupyterenv
+    volumes:
+      - ${LOCAL_WORKING_DIR}:/home/jovyan/work
+      # - ${LOCAL_DATASETS}:/home/jovyan/work/datasets
+      # - ${LOCAL_MODULES}:/home/jovyan/work/modules
+    ports:
+      - "18888:8888"
+    command: "start-notebook.sh \
+      --NotebookApp.password=${ACCESS_TOKEN}"
 volumes:
   mongodata:
   mongotemp:
