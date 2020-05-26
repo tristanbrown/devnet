@@ -65,7 +65,8 @@ services:
     ports:
       - "18888:8888"
     command: "start-notebook.sh \
-      --NotebookApp.password=${ACCESS_TOKEN}"
+      --NotebookApp.password=${ACCESS_TOKEN} \
+      --ContentsManager.allow_hidden=True"
 volumes:
   mongodata:
   mongotemp:
