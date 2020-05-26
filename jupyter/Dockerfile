@@ -16,16 +16,16 @@ WORKDIR /home/$NB_USER/venv
 ARG ENV_NAME=data
 RUN python -m venv $ENV_NAME && \
     . $ENV_NAME/bin/activate && \
-    pip install --upgrade pip && \
+    pip install --upgrade pip wheel && \
     pip install ipykernel && \
-    python -m ipykernel install --name=$ENV_NAME && \
+    python -m ipykernel install --user --name=$ENV_NAME && \
     deactivate
 ARG ENV_NAME=invest
 RUN python -m venv $ENV_NAME && \
     . $ENV_NAME/bin/activate && \
-    pip install --upgrade pip && \
+    pip install --upgrade pip wheel && \
     pip install ipykernel && \
-    python -m ipykernel install --name=$ENV_NAME && \
+    python -m ipykernel install --user --name=$ENV_NAME && \
     deactivate
 
 # Install the venv packages
