@@ -5,7 +5,11 @@
 ARG BASE_CONTAINER=jupyter/minimal-notebook
 FROM $BASE_CONTAINER
 
-# USER root
+USER root
+
+RUN apt-get update && apt-get install -yq --no-install-recommends \
+    vim
+
 USER $NB_UID
 
 RUN mkdir /home/$NB_USER/venv && \
