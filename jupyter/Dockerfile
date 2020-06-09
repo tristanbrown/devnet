@@ -36,11 +36,11 @@ RUN python -m venv $ENV_NAME && \
 COPY requirements requirements
 ARG ENV_NAME=data
 RUN . $ENV_NAME/bin/activate && \
-    pip install -r requirements/$ENV_NAME.txt && \
+    pip install -r requirements/$ENV_NAME.txt --no-cache-dir && \
     deactivate
 ARG ENV_NAME=invest
 RUN . $ENV_NAME/bin/activate && \
-    pip install -r requirements/$ENV_NAME.txt && \
+    pip install -r requirements/$ENV_NAME.txt --no-cache-dir && \
     deactivate
 
 # Restore standard environment
