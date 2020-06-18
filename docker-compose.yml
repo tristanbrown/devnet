@@ -64,6 +64,8 @@ services:
       # - ${LOCAL_MODULES}:/home/jovyan/work/modules
     ports:
       - "18888:8888"
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     command: "start-notebook.sh \
       --NotebookApp.password=${ACCESS_TOKEN} \
       --ContentsManager.allow_hidden=True"
