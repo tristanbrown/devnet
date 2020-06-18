@@ -8,7 +8,7 @@ FROM $BASE_CONTAINER
 USER root
 
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    vim
+    vim libpq-dev
 
 USER $NB_UID
 
