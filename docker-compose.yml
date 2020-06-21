@@ -16,6 +16,7 @@ services:
       - docker-volume-backup.exec-pre-backup=mongodump --archive=/tmp/mongodb/mongo.dump
       - docker-volume-backup.exec-post-backup=rm -rfv /tmp/mongodb
       # Restore backup by cp into mongodb container, $ mongorestore --archive=mongo.dump
+    restart: always
   postgres:
     image: postgres:12.3
     ports:
@@ -31,6 +32,7 @@ services:
       - docker-volume-backup.exec-pre-backup=pg_dumpall -U postgres -f /tmp/postgres/pg_backup.bak
       - docker-volume-backup.exec-post-backup=rm -rfv /tmp/postgres
       # Restore backup by cp into postgres container, $ psql -f pg_backup.bak postgres
+    restart: always
   backup:
     image: futurice/docker-volume-backup:2.0.0
     volumes:
@@ -40,15 +42,18 @@ services:
       - ${BACKUP_DIR}:/archive
     environment:
       - BACKUP_CRON_EXPRESSION=${BACKUP_CRON_EXPRESSION}
+    restart: always
   adminer:
     image: adminer:4.7
     ports:
       - "18080:8080"
+    restart: always
   rabbitmq:
     image: rabbitmq:3-management-alpine
     ports:
       - "25672:5672"
       - "35672:15672"
+    restart: always
   crontris:
     image: tristanbrown/crontris:${CRONTRIS_TAG:-latest}
     depends_on:
