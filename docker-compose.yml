@@ -34,7 +34,7 @@ services:
       # Restore backup by cp into postgres container, $ psql -f pg_backup.bak postgres
     restart: always
   backup:
-    image: futurice/docker-volume-backup:2.0.0
+    image: futurice/docker-volume-backup:2.1.0
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - mongotemp:/backup/mongodb:ro
