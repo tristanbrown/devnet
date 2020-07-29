@@ -69,6 +69,9 @@ services:
       # - ${LOCAL_MODULES}:/home/jovyan/work/modules
     ports:
       - "18888:8888"
+      - "18787:8787"
+      - "18788:8788"
+      - "18789:8789"
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - ALPACA_KEYID=${ALPACA_KEYID}
