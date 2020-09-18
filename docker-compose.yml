@@ -76,6 +76,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - ALPACA_KEYID=${ALPACA_KEYID}
       - ALPACA_KEY=${ALPACA_KEY}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
     command: "start-notebook.sh \
       --NotebookApp.password=${ACCESS_TOKEN} \
       --ContentsManager.allow_hidden=True"
