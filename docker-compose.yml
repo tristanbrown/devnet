@@ -61,6 +61,7 @@ services:
       - mongodb
     environment:
       - COMPUTERNAME=${COMPUTERNAME}
+    restart: always
   jupyter:
     image: tristanbrown/jupyterenv
     volumes:
@@ -80,6 +81,7 @@ services:
     command: "start-notebook.sh \
       --NotebookApp.password=${ACCESS_TOKEN} \
       --ContentsManager.allow_hidden=True"
+    restart: always
 volumes:
   mongodata:
   mongotemp:
