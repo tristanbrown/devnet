@@ -73,6 +73,7 @@ services:
       - "18787:8787"
       - "18788:8788"
       - "18789:8789"
+      - "15000:5000"
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - ALPACA_KEYID=${ALPACA_KEYID}
