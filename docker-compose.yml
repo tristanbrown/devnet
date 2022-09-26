@@ -18,13 +18,13 @@ services:
       # Restore backup by cp into mongodb container, $ mongorestore --archive=mongo.dump
     restart: always
   postgres:
-    image: postgres:14.5
+    image: postgres:12.3
     ports:
       - "15432:5432"
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     volumes:
-      - postgresdata_14:/var/lib/postgresql/data
+      - postgresdata:/var/lib/postgresql/data
       - postgrestemp:/tmp/postgres
     labels:
       # First, safely backs up from data to temp using db-specific tool.
@@ -44,7 +44,7 @@ services:
       - BACKUP_CRON_EXPRESSION=${BACKUP_CRON_EXPRESSION}
     restart: always
   adminer:
-    image: adminer:4.8.1
+    image: adminer:4.7
     ports:
       - "18080:8080"
     restart: always
@@ -86,5 +86,5 @@ services:
 volumes:
   mongodata:
   mongotemp:
-  postgresdata_14:
+  postgresdata:
   postgrestemp:
