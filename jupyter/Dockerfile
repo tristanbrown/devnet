@@ -8,7 +8,7 @@ FROM $BASE_CONTAINER
 USER root
 
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    vim libpq-dev
+    vim libpq-dev openssh-client
 
 USER $NB_UID
 

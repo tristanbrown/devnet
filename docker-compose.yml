@@ -66,8 +66,7 @@ services:
     image: tristanbrown/jupyterenv
     volumes:
       - ${LOCAL_WORKING_DIR}:/home/jovyan/work
-      # - ${LOCAL_DATASETS}:/home/jovyan/work/datasets
-      # - ${LOCAL_MODULES}:/home/jovyan/work/modules
+      - ~/.ssh:/root/.ssh
     ports:
       - "18888:8888"
       - "18787:8787"
