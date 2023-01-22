@@ -25,7 +25,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./jupyter
           file: ./jupyter/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/jupyterenv:latest
