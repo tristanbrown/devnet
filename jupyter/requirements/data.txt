@@ -1,6 +1,6 @@
 # Requirements for the venv: data
-numpy==1.19.*
-pandas==1.2.*
+numpy
+pandas==1.5.*
 openpyxl==3.0.*
 matplotlib==3.3.*
 seaborn==0.11.1
